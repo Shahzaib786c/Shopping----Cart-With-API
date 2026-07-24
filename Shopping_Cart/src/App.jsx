@@ -6,18 +6,23 @@ import Contact from "./Pages/Contact";
 import NotFound from "./Pages/NotFound";
 import "./App.css";
 
-const router = createBrowserRouter([
+const router = createBrowserRouter(
+  [
+    {
+      path: "/",
+      element: <Layout />,
+      children: [
+        { index: true, element: <Home /> },
+        { path: "about", element: <About /> },
+        { path: "contact", element: <Contact /> },
+        { path: "*", element: <NotFound /> },
+      ],
+    },
+  ],
   {
-    path: "/",
-    element: <Layout />,
-    children: [
-      { index: true, element: <Home /> },
-      { path: "about", element: <About /> },
-      { path: "contact", element: <Contact /> },
-      { path: "*", element: <NotFound /> },
-    ],
-  },
-]);
+    basename: "/Shopping----Cart-With-API",
+  }
+);
 
 function App() {
   return <RouterProvider router={router} />;
