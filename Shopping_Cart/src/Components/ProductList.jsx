@@ -42,7 +42,7 @@ const FALLBACK_PRODUCTS = [
   },
 ];
 
-function ProductList({ cartCount, onAddToCart, onCartClick }) {
+function ProductList({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -88,11 +88,7 @@ function ProductList({ cartCount, onAddToCart, onCartClick }) {
           <button className="btn btn-primary" onClick={() => setShowAdd(true)}>
             + Add Product
           </button>
-          <button className="btn btn-cart" onClick={onCartClick}>
-            <CartIcon />
-            Cart
-            {cartCount > 0 && <span className="inline-badge">{cartCount}</span>}
-          </button>
+          
         </div>
       </div>
 
