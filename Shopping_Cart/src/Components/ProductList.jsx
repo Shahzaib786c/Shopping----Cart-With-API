@@ -3,7 +3,6 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 import AddProductModal from "./AddProductModal";
 import ProductDetailsModal from "./ProductDetailsModal";
-import CartIcon from "./CartIcon";
 
 const FALLBACK_PRODUCTS = [
   {
@@ -57,7 +56,7 @@ function ProductList({ onAddToCart }) {
         setError("");
         const url =
           searchTerm === ""
-            ? "https://dummyjson.com/products?limit=10"
+            ? "https://dummyjson.com/products"
             : `https://dummyjson.com/products/search?q=${encodeURIComponent(
                 searchTerm,
               )}`;
@@ -88,7 +87,6 @@ function ProductList({ onAddToCart }) {
           <button className="btn btn-primary" onClick={() => setShowAdd(true)}>
             + Add Product
           </button>
-          
         </div>
       </div>
 
