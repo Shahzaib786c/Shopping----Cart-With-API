@@ -26,4 +26,3 @@ function ProductCard({ product, onAddToCart, onViewDetails }) {
   );
 }
 export default ProductCard;
-

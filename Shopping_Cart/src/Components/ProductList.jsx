@@ -3,8 +3,46 @@ import axios from "axios";
 import ProductCard from "./ProductCard";
 import AddProductModal from "./AddProductModal";
 import ProductDetailsModal from "./ProductDetailsModal";
+import CartIcon from "./CartIcon";
 
-function ProductList({ onAddToCart }) {
+const FALLBACK_PRODUCTS = [
+  {
+    id: 1,
+    title: "Essence Mascara Lash Princess",
+    description:
+      "A popular mascara known for its volumizing and lengthening effects.",
+    category: "beauty",
+    price: 9.99,
+    rating: 2.56,
+    stock: 99,
+    thumbnail:
+      "https://cdn.dummyjson.com/product-images/beauty/essence-mascara-lash-princess/thumbnail.webp",
+  },
+  {
+    id: 2,
+    title: "Eyeshadow Palette with Mirror",
+    description: "A versatile eyeshadow palette with a built-in mirror.",
+    category: "beauty",
+    price: 19.99,
+    rating: 2.86,
+    stock: 34,
+    thumbnail:
+      "https://cdn.dummyjson.com/product-images/beauty/eyeshadow-palette-with-mirror/thumbnail.webp",
+  },
+  {
+    id: 3,
+    title: "Powder Canister",
+    description: "A lightweight setting powder that controls shine.",
+    category: "beauty",
+    price: 14.99,
+    rating: 4.64,
+    stock: 89,
+    thumbnail:
+      "https://cdn.dummyjson.com/product-images/beauty/powder-canister/thumbnail.webp",
+  },
+];
+
+function ProductList({ cartCount, onAddToCart, onCartClick }) {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [loading, setLoading] = useState(true);
@@ -24,9 +62,10 @@ function ProductList({ onAddToCart }) {
                 searchTerm,
               )}`;
         const response = await axios.get(url);
-        setProducts(response.data.products);
+        setProducts(response?.data?.products || FALLBACK_PRODUCTS);
       } catch {
-        setError("Could not load products.");
+        setProducts(FALLBACK_PRODUCTS);
+        setError("");
       } finally {
         setLoading(false);
       }
@@ -35,7 +74,7 @@ function ProductList({ onAddToCart }) {
   }, [searchTerm]);
 
   function addProduct(product) {
-    setProducts([product, ...products]);
+    setProducts((currentProducts) => [product, ...currentProducts]);
   }
 
   return (
@@ -45,9 +84,16 @@ function ProductList({ onAddToCart }) {
           <span className="eyebrow">Fresh picks</span>
           <h2>Products</h2>
         </div>
-        <button className="btn btn-primary" onClick={() => setShowAdd(true)}>
-          + Add Product
-        </button>
+        <div className="page-actions">
+          <button className="btn btn-primary" onClick={() => setShowAdd(true)}>
+            + Add Product
+          </button>
+          <button className="btn btn-cart" onClick={onCartClick}>
+            <CartIcon />
+            Cart
+            {cartCount > 0 && <span className="inline-badge">{cartCount}</span>}
+          </button>
+        </div>
       </div>
 
       <div className="product-toolbar">

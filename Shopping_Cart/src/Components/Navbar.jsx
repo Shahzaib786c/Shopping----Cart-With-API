@@ -15,10 +15,12 @@ function Navbar({ cartCount, onCartClick }) {
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact">Contact</NavLink>
         </div>
-        <button className="cart-btn" onClick={onCartClick}>
-          <CartIcon />
-          {cartCount > 0 && <span className="badge">{cartCount}</span>}
-        </button>
+        {onCartClick && (
+          <button className="cart-btn" onClick={onCartClick}>
+            <CartIcon />
+            {cartCount > 0 && <span className="badge">{cartCount}</span>}
+          </button>
+        )}
       </div>
     </nav>
   );
