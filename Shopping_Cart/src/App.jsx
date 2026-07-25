@@ -20,8 +20,8 @@ const router = createBrowserRouter(
     },
   ],
   {
-    basename: "/Shopping----Cart-With-API",
-  }
+    basename: "/ShoppingCart",
+  },
 );
 
 function App() {

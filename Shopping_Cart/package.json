@@ -2,7 +2,7 @@
   "name": "shopping-cart",
   "private": true,
   "version": "0.0.0",
-  "homepage": "https://shahzaib786c.github.io/Shopping----Cart-With-API",
+  "homepage": "https://shahzaib786c.github.io/ShoppingCart",
   "type": "module",
   "scripts": {
     "dev": "vite",
