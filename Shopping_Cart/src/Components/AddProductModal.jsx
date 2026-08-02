@@ -13,8 +13,8 @@ function AddProductModal({ onAddProduct, onClose }) {
       return;
     }
     const newProduct = {
-      id: Date.now(),
-      title: form.name,
+      // id: Date.now(),
+      // title: form.name,
       name: form.name,
       price: Number(form.price),
     };

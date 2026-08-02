@@ -12,6 +12,7 @@ function Navbar({ cartCount, onCartClick }) {
       <div className="nav-actions">
         <div className="nav-links">
           <NavLink to="/">Home</NavLink>
+          <NavLink to="/products">Products</NavLink>
           <NavLink to="/about">About</NavLink>
           <NavLink to="/contact">Contact</NavLink>
         </div>

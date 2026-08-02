@@ -4,7 +4,11 @@ function Modal({ title, onClose, children }) {
       <div className="modal" onClick={(e) => e.stopPropagation()}>
         <div className="modal-head">
           <h2>{title}</h2>
-          <button className="icon-btn" onClick={onClose} aria-label="Close modal">
+          <button
+            className="icon-btn"
+            onClick={onClose}
+            aria-label="Close modal"
+          >
             X
           </button>
         </div>

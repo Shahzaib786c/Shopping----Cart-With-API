@@ -44,6 +44,7 @@ const FALLBACK_PRODUCTS = [
 function ProductList({ onAddToCart }) {
   const [products, setProducts] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("all");
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [showAdd, setShowAdd] = useState(false);
@@ -64,7 +65,7 @@ function ProductList({ onAddToCart }) {
         setProducts(response?.data?.products || FALLBACK_PRODUCTS);
       } catch {
         setProducts(FALLBACK_PRODUCTS);
-        setError("");
+        setError("Could not load products. Showing fallback items.");
       } finally {
         setLoading(false);
       }
@@ -75,6 +76,11 @@ function ProductList({ onAddToCart }) {
   function addProduct(product) {
     setProducts((currentProducts) => [product, ...currentProducts]);
   }
+
+  const filteredProducts = products.filter((product) => {
+    if (selectedCategory === "all") return true;
+    return (product.category || "").toLowerCase() === selectedCategory.toLowerCase();
+  });
 
   return (
     <main className="page">
@@ -97,17 +103,42 @@ function ProductList({ onAddToCart }) {
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <select
+          className="category-select"
+          value={selectedCategory}
+          onChange={(e) => setSelectedCategory(e.target.value)}
+        >
+          <option value="all">All Categories</option>
+          <option value="beauty">Beauty</option>
+          <option value="fragrances">Fragrances</option>
+          <option value="furniture">Furniture</option>
+          <option value="groceries">Groceries</option>
+          <option value="home-decoration">Home Decoration</option>
+          <option value="kitchen-accessories">Kitchen Accessories</option>
+          <option value="laptops">Laptops</option>
+          <option value="mens-shirts">Men's Shirts</option>
+          <option value="mens-shoes">Men's Shoes</option>
+          <option value="mobile-accessories">Mobile Accessories</option>
+          <option value="smartphones">Smartphones</option>
+          <option value="sports-accessories">Sports Accessories</option>
+          <option value="sunglasses">Sunglasses</option>
+          <option value="tablets">Tablets</option>
+          <option value="tops">Tops</option>
+          <option value="womens-bags">Women's Bags</option>
+          <option value="womens-dresses">Women's Dresses</option>
+          <option value="womens-shoes">Women's Shoes</option>
+        </select>
       </div>
 
       {loading ? (
         <p className="status-text">Loading products...</p>
       ) : error ? (
         <p className="error">{error}</p>
-      ) : products.length === 0 ? (
-        <p className="empty-state">No products found.</p>
+      ) : filteredProducts.length === 0 ? (
+        <p className="empty-state">No products found for this category.</p>
       ) : (
         <div className="grid">
-          {products.map((product) => (
+          {filteredProducts.map((product) => (
             <ProductCard
               key={product.id}
               product={product}

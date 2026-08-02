@@ -1,48 +1,29 @@
-import { Outlet, useOutletContext } from "react-router";
+import { Link, Outlet } from "react-router";
 import Navbar from "../Components/Navbar";
 import { useState } from "react";
 import CartModal from "../Components/CartModal";
+import { useCart } from "../context/useCart";
 
 function Layout() {
-  const [cart, setCart] = useState([]);
+  const { cart, cartCount, changeQty, removeFromCart } = useCart();
   const [showCart, setShowCart] = useState(false);
-
-  function addToCart(product) {
-    const found = cart.find((item) => item.id === product.id);
-    if (found) {
-      setCart(
-        cart.map((item) =>
-          item.id === product.id ? { ...item, qty: item.qty + 1 } : item,
-        ),
-      );
-    } else {
-      setCart([...cart, { ...product, qty: 1 }]);
-    }
-  }
-
-  function changeQty(id, delta) {
-    setCart(
-      cart
-        .map((item) =>
-          item.id === id ? { ...item, qty: item.qty + delta } : item,
-        )
-        .filter((item) => item.qty > 0),
-    );
-  }
-
-  function removeFromCart(id) {
-    setCart(cart.filter((item) => item.id !== id));
-  }
-
-  let cartCount = 0;
-  cart.forEach((item) => {
-    cartCount += item.qty;
-  });
 
   return (
     <div className="app-shell">
       <Navbar cartCount={cartCount} onCartClick={() => setShowCart(true)} />
-      <Outlet context={{ addToCart }} />
+      <Outlet />
+      <footer className="site-footer">
+        <div className="footer-copy">
+          <span className="eyebrow">Quick Shop</span>
+          <p>Reliable shopping with smart cart persistence, clean navigation, and API-powered products.</p>
+        </div>
+        <div className="footer-links">
+          <Link to="/products">Products</Link>
+          <Link to="/about">About</Link>
+          <Link to="/contact">Contact</Link>
+        </div>
+        <p className="footer-note">© {new Date().getFullYear()} Quick Shop. Designed for seamless commerce.</p>
+      </footer>
       {showCart && (
         <CartModal
           cart={cart}
@@ -53,10 +34,6 @@ function Layout() {
       )}
     </div>
   );
-}
-
-export function useCart() {
-  return useOutletContext();
 }
 
 export default Layout;
